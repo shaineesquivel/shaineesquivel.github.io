@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Eye on ASIA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="../img/icon.png" type="image/x-icon">
+
+    <style>
+        body {
+            background: radial-gradient(circle, red, white);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        header {
+            background: #d10a11;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .home-btn {
+            position: absolute;
+            top: 35px;
+            left: 35px;
+            background: white;
+            color: #d10a11;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 30px;
+            text-decoration: none;
+            border: 2px solid #d10a11;
+            transition: 0.3s;
+        }
+
+        .home-btn:hover {
+            background: #d10a11;
+            color: white;
+            text-decoration: none;
+        }
+
+        .card-custom {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            background-color: #ffffff;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card-custom img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .card-custom:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-weight: bold;
+        }
+
+        #modalImage {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="../index.html" class="home-btn"> ← back to home</a>
+        <h1>Asia’s Crown Jewels</h1>
+        <h4>Traveler's Dream List</h4>
+    </header>
+
+    <div class="container my-5">
+        <div class="row g-4" id="container-row">
+        </div>
+    </div>
+
+    <div class="modal fade" id="countryModal" tabindex="-1" aria-labelledby="countryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-light">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="countryModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="modalImage" src="" class="img-fluid rounded" alt="Country">
+                    <p class="mt-3" id="modalDescription"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(title, image, description) {
+            var modalTitle = document.getElementById("countryModalLabel");
+            var modalImage = document.getElementById("modalImage");
+            var modalDescription = document.getElementById("modalDescription");
+
+            modalTitle.innerText = title;
+            modalImage.src = image;
+            modalDescription.innerText = description;
+
+            var myModal = new bootstrap.Modal(document.getElementById('countryModal'));
+            myModal.show();
+        }
+
+        var titles = ["JAPAN", "SOUTH KOREA", "THAILAND", "VIETNAM", "SINGAPORE", "CHINA", "INDONESIA", "MALAYSIA"];
+        var pictures = ["japan.webp", "korea.avif", "thailand.jpg", "vietnam.jpg", "Singapore-city.avif", "china.jpg", "indonesia.jpg", "malaysia.jpg"];
+        var contents = [
+            "Experience the cherry blossoms and ancient temples of Japan.",
+            "Explore vibrant Seoul and the rich culture of South Korea.",
+            "Relax on stunning beaches and visit ornate temples in Thailand.",
+            "Cruise through Ha Long Bay and savor Vietnam's cuisine.",
+            "Discover futuristic gardens and shopping paradise in Singapore.",
+            "Walk along the Great Wall and witness China's history.",
+            "Dive into Bali's beaches and Indonesia’s volcanic beauty.",
+            "Enjoy Malaysia’s diverse cultures and modern cities."
+        ];
+        var rowElement = document.getElementById("container-row");
+
+        for (var i = 0; i < titles.length; i++) {
+            rowElement.innerHTML += `
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card card-custom shadow-sm" onclick="openModal('${titles[i]}', 'img/${pictures[i]}', '${contents[i]}')">
+                <img src="img/${pictures[i]}" class="card-img-top" alt="${titles[i]}">
+                <div class="card-body text-center">
+                    <h5 class="card-title">${titles[i]}</h5>
+                    <p class="card-text small">${contents[i]}</p>
+                </div>
+            </div>
+        </div>`;
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
