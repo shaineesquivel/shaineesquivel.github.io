@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>VALORANT Ops Center</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600&display=swap" rel="stylesheet">
+  <link rel="icon" href="../img/icon.png" type="image/x-icon">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('img/bg2.webp') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Rajdhani', sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: #ff4655;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      border-bottom: 1px solid #ff465533;
+    }
+
+    .home-btn {
+      position: absolute;
+      top: 2rem;
+      left: 1.5rem;
+      background: #ff4655;
+      color: white;
+      text-decoration: none;
+      border: 2px solid #ff4655;
+      transition: 0.3s;
+      z-index: 10;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 10px 20px;
+      border-radius: 8px;
+    }
+
+    .home-btn:hover {
+      background: white;
+      color: #ff4655;
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      .home-btn {
+        top: 1rem;
+        left: 1rem;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      .home-text {
+        display: none;
+      }
+    }
+
+    .search-bar {
+      display: flex;
+      justify-content: center;
+      margin: 2rem auto;
+    }
+
+    .column-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .row {
+      display: flex;
+    }
+
+    .search-input {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #444;
+      backdrop-filter: blur(8px);
+      padding: 12px 20px;
+      width: 320px;
+      font-size: 1rem;
+      color: #fff;
+      border-radius: 10px 0 0 10px;
+      outline: none;
+    }
+
+    .search-button {
+      background-color: #ff4655;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 0 10px 10px 0;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .search-button:hover {
+      background-color: #fff;
+      color: #ff4655;
+    }
+
+    .button-container {
+      margin-top: 1rem;
+      display: flex;
+      gap: 10px;
+    }
+
+    .show-button {
+      background-color: #444;
+      border: 1px solid #ff4655;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .show-button:hover {
+      background-color: #ff4655;
+      color: white;
+    }
+
+    .clear-button {
+      background-color: #222;
+      border: 1px solid #888;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .clear-button:hover {
+      background-color: #555;
+      color: #ff4655;
+    }
+
+    .agents-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .agent-card {
+      background: #1a1a1a;
+      border: 2px solid #ff4655;
+      padding: 1rem;
+      border-radius: 15px;
+      transition: 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 0 10px #ff465522;
+    }
+
+    .agent-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 15px #ff4655aa;
+    }
+
+    .agent-card img {
+      width: 100%;
+      height: 280px;
+      object-fit: contain;
+      background-color: #000;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .agent-card h3 {
+      font-size: 1.4rem;
+      margin: 0.5rem 0;
+      color: #ff4655;
+    }
+
+    .role-tag {
+      font-size: 0.9rem;
+      padding: 5px 10px;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .role-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .agent-desc {
+      font-size: 0.9rem;
+      color: #ccc;
+      height: 70px;
+      overflow: hidden;
+    }
+
+    .abilities {
+      margin-top: 10px;
+    }
+
+    .abilities span {
+      background-color: #333;
+      border: 1px solid #ff4655;
+      color: #fff;
+      font-size: 0.8rem;
+      padding: 4px 8px;
+      margin: 3px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>VALORANT Ops Center</header>
+  <a href="../index.html" class="home-btn">
+    ← <span class="home-text">back to home</span>
+  </a>
+
+  <div class="search-bar column-center">
+    <div class="row">
+      <input type="text" id="agentInput" class="search-input" placeholder="Search Agent" />
+      <button class="search-button" onclick="searchAgent()">Search</button>
+    </div>
+    <div class="button-container">
+      <button class="show-button" onclick="showAllAgents()">Show All Agents</button>
+      <button class="clear-button" onclick="clearResults()">Clear</button>
+    </div>
+  </div>
+
+  <div class="agents-grid" id="agentsGrid"></div>
+
+  <script>
+    const roleColors = {
+      "Duelist": "#ff4655",
+      "Initiator": "#00b8d9",
+      "Sentinel": "#f9c74f",
+      "Controller": "#6a4c93",
+      "Unknown": "#888888"
+    };
+
+    let allAgents = [];
+
+    async function loadAgents() {
+      const res = await fetch("https://valorant-api.com/v1/agents?isPlayableCharacter=true");
+      const data = await res.json();
+      allAgents = data.data;
+    }
+
+    function renderAgents(agents) {
+      const grid = document.getElementById("agentsGrid");
+      grid.innerHTML = "";
+
+      if (agents.length === 0) {
+        grid.innerHTML = "<p style='text-align:center;'>No agent found.</p>";
+        return;
+      }
+
+      agents.forEach(agent => {
+        const role = agent.role?.displayName || "Unknown";
+        const color = roleColors[role] || roleColors["Unknown"];
+        const portrait = agent.fullPortrait || agent.displayIcon;
+
+        const card = document.createElement("div");
+        card.className = "agent-card";
+
+        card.innerHTML =
+          '<img src="' + portrait + '" alt="' + agent.displayName + '">' +
+          '<h3>' + agent.displayName + '</h3>' +
+          '<div class="role-tag" style="border: 1px solid ' + color + '; background-color: ' + color + '22;">' +
+          '<span class="role-dot" style="background-color: ' + color + ';"></span>' +
+          '<span>' + role + '</span>' +
+          '</div>' +
+          '<div class="agent-desc">' + (agent.description || "No description available.") + '</div>' +
+          '<div class="abilities">' +
+          agent.abilities
+            .filter(a => a.displayName)
+            .map(a => '<span>' + a.displayName + '</span>')
+            .join('') +
+          '</div>';
+
+        grid.appendChild(card);
+      });
+    }
+
+    function searchAgent() {
+      const query = document.getElementById("agentInput").value.toLowerCase().trim();
+      const grid = document.getElementById("agentsGrid");
+
+      if (query === "") {
+        grid.innerHTML = "<p style='text-align:center;'>Please input agent.</p>";
+        return;
+      }
+
+      const filtered = allAgents.filter(agent =>
+        agent.displayName.toLowerCase().includes(query)
+      );
+      renderAgents(filtered);
+    }
+
+
+    function showAllAgents() {
+      renderAgents(allAgents);
+    }
+
+    function clearResults() {
+      document.getElementById("agentInput").value = "";
+      document.getElementById("agentsGrid").innerHTML = "";
+    }
+
+    loadAgents();
+  </script>
+
+
+</body>
+
+</html>
