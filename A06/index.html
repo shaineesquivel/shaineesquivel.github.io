@@ -34,11 +34,87 @@
             text-decoration: none;
             border: 2px solid #d10a11;
             transition: 0.3s;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
         }
 
         .home-btn:hover {
             background: #d10a11;
             color: white;
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+            .home-btn {
+                top: 35px;
+                left: 35px;
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .home-text {
+                display: none;
+            }
+        }
+
+        .btn-light {
+            position: absolute;
+            top: 35px;
+            left: 90%;
+            background: white;
+            color: #d10a11;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 30px;
+            text-decoration: none;
+            border: 2px solid #d10a11;
+            transition: 0.3s;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn-light:hover {
+            background: #d10a11;
+            color: white;
+            border-color: #d10a11;
+            text-decoration: none;
+        }
+
+        .btn-dark {
+            position: absolute;
+            top: 35px;
+            left: 90%;
+            background: white;
+            color: #d10a11;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 30px;
+            text-decoration: none;
+            border: 2px solid #d10a11;
+            transition: 0.3s;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn-dark:hover {
+            background: #d10a11;
+            color: white;
+            border-color: #d10a11;
             text-decoration: none;
         }
 
@@ -71,15 +147,55 @@
             height: 500px;
             object-fit: cover;
         }
+
+        [data-bs-theme="dark"] {
+            background: radial-gradient(circle, #490101, #2a0000);
+            color: white;
+        }
+
+        [data-bs-theme="dark"] header {
+            background: #660101;
+            color: white;
+        }
+
+        [data-bs-theme="dark"] .card-custom {
+            background-color: #575050;
+            color: white;
+        }
+
+
+        [data-bs-theme="dark"] .home-btn {
+            background-color: #490101;
+            color: white;
+        }
+
+        [data-bs-theme="dark"] .modal-content {
+            background-color: #490101;
+            color: white;
+        }
+
+        [data-bs-theme="dark"] .btn-dark {
+            background: white;
+            color: #490101;
+        }
+
+        [data-bs-theme="dark"] .btn-light {
+            background: #490101;
+            color: white;
+        }
     </style>
 </head>
 
-<body>
+<body id="body">
 
     <header>
-        <a href="../index.html" class="home-btn"> ← back to home</a>
+        <a href="../index.html" class="home-btn">
+            ← <span class="home-text">back to home</span>
+        </a>
         <h1>Asia’s Crown Jewels</h1>
         <h4>Traveler's Dream List</h4>
+
+        <button id="colorBtn" onclick="changeMode()" class="btn btn-light">Dark Mode</button>
     </header>
 
     <div class="container my-5">
@@ -114,6 +230,19 @@
 
             var myModal = new bootstrap.Modal(document.getElementById('countryModal'));
             myModal.show();
+        }
+
+        var mode = "light";
+        function changeMode() {
+            var body = document.getElementById("body");
+            var colorBtn = document.getElementById("colorBtn");
+            mode = mode == "light" ? "dark" : "light";
+            var btnText = mode == "dark" ? "Light Mode" : "Dark Mode";
+            var btnClass = mode == "dark" ? "btn-light" : "btn-dark";
+
+            colorBtn.innerHTML = btnText;
+            colorBtn.className = "btn " + btnClass;
+            body.setAttribute("data-bs-theme", mode);
         }
 
         var titles = ["JAPAN", "SOUTH KOREA", "THAILAND", "VIETNAM", "SINGAPORE", "CHINA", "INDONESIA", "MALAYSIA"];

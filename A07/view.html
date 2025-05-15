@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent View - VALORANT Ops Center</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600&display=swap" rel="stylesheet">
+  <link rel="icon" href="../img/icon.png" type="image/x-icon">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url(../A07/img/bg2.webp) no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Rajdhani', sans-serif;
+      color: white;
+    }
+
+    .home-btn {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      background: #ff4655;
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      border: 2px solid #ff4655;
+      transition: 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .home-btn:hover {
+      background: white;
+      color: #ff4655;
+      box-shadow: 0 4px 12px rgba(255, 70, 85, 0.5);
+    }
+
+    .details-container {
+      max-width: 850px;
+      margin: 6rem auto 2rem;
+      padding: 2.5rem;
+      background: rgba(0, 0, 0, 0.85);
+      border-radius: 20px;
+      box-shadow: 0 0 25px #ff465544;
+      text-align: center;
+      backdrop-filter: blur(6px);
+    }
+
+    .profile-img {
+      width: 100%;
+      max-height: 420px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+    }
+
+    .character-name {
+      font-size: 2.5rem;
+      color: #ff4655;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 1px 3px #000;
+    }
+
+    .status {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      color: #ddd;
+    }
+
+    .status-dot {
+      width: 12px;
+      height: 12px;
+      display: inline-block;
+      border-radius: 50%;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    .info-block {
+      font-size: 1.05rem;
+      margin: 1.2rem 0;
+      text-align: left;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1rem;
+      border-radius: 10px;
+      line-height: 1.6;
+    }
+
+    .info-block strong {
+      color: #ff4655;
+    }
+
+    .info-block ul {
+      padding-left: 1.4rem;
+      margin-top: 0.6rem;
+    }
+
+    .info-block li {
+      margin: 0.4rem 0;
+      color: #eee;
+    }
+
+    @media (max-width: 600px) {
+      .details-container {
+        margin: 4rem 1rem;
+        padding: 1.5rem;
+      }
+
+      .profile-img {
+        max-height: 300px;
+      }
+
+      .character-name {
+        font-size: 1.8rem;
+      }
+
+      .info-block {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="../A07/index.html" class="home-btn">← Back to Valorant Ops Center</a>
+  <div id="characterDetails" class="details-container"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const agentId = params.get("id");
+
+    const roleColors = {
+      "Duelist": "#ff4655",
+      "Initiator": "#00b8d9",
+      "Sentinel": "#f9c74f",
+      "Controller": "#6a4c93",
+      "Unknown": "#888888"
+    };
+
+    const fetchCharacter = async () => {
+      const res = await fetch("https://valorant-api.com/v1/agents?isPlayableCharacter=true");
+      const data = await res.json();
+      const agents = data.data;
+
+      const agent = agents.find(function(a) {
+        return a.uuid === agentId;
+      });
+
+      if (!agent) return;
+
+      const role = agent.role ? agent.role.displayName : "Unknown";
+      const color = roleColors[role] || roleColors["Unknown"];
+
+      document.getElementById("characterDetails").innerHTML =
+        '<img src="' + (agent.fullPortrait || agent.displayIcon) + '" class="profile-img" alt="' + agent.displayName + '">' +
+        '<div class="character-name">' + agent.displayName + '</div>' +
+        '<div class="status"><span class="status-dot" style="background-color:' + color + ';"></span>' +
+        role + ' - ' + (agent.role ? agent.role.description : "No role description") + '</div>' +
+        '<div class="info-block"><strong>Origin:</strong> ' + (agent.description || "Unknown") + '</div>' +
+        '<div class="info-block"><strong>Abilities:</strong><ul>';
+
+      agent.abilities.forEach(function(ability) {
+        if (ability.displayName) {
+          document.getElementById("characterDetails").innerHTML +=
+            '<li><strong>' + ability.displayName + ':</strong> ' +
+            (ability.description || "No description") + '</li>';
+        }
+      });
+
+      document.getElementById("characterDetails").innerHTML += '</ul></div>';
+    };
+
+    fetchCharacter();
+  </script>
+</body>
+</html>
